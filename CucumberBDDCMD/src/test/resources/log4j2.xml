@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="log4j2.dtd"?>
+<Configuration status="WARN">
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d [%t] %-5level %logger{36} - %msg%n" />
+			<!-- Optional global filter -->
+			<Filters>
+				<RegexFilter regex=".*Connection reset.*" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+			</Filters>
+		</Console>
+	</Appenders>
+
+	<Loggers>
+		<!-- Suppress specific Selenium WebSocket logger -->
+		<Logger name="org.openqa.selenium.remote.http.WebSocket" level="OFF"
+			additivity="false">
+			<AppenderRef ref="Console" />
+		</Logger>
+
+		<!-- You may also want to silence the broader HTTP logger -->
+		<Logger name="org.openqa.selenium.remote.http" level="ERROR"
+			additivity="false">
+			<AppenderRef ref="Console" />
+		</Logger>
+		<Logger name="org.openqa.selenium.devtools" level="ERROR"
+			additivity="false">
+			<AppenderRef ref="Console" />
+		</Logger>
+		<Logger name="cucumber.api.cli.Main" level="ERROR" additivity="false">
+		<AppenderRef ref="Console" />
+		</Logger>
+		<!-- Root logger -->
+		<Root level="WARN">
+			<AppenderRef ref="Console" />
+		</Root>
+	</Loggers>
+</Configuration>
